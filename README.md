@@ -43,7 +43,7 @@ All code was written using python 3.9 with the following libraries:
 - pillow 8.2.x (required for saving plots as JPG images)
 - pyarrow 4.x  (required for feather file format support)
 
-Later versions may also work.
+Later versions may also work (note that pandas 1.4.1 is not compatible, pandas 1.3.x is OK)
 
 ### Processing experimental data, generating simulation data, and creating figures
 
