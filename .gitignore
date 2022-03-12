@@ -1,0 +1,6 @@
+*.dll
+*.pyc
+*~
+*#
+.*.md.html
+*_test.py
