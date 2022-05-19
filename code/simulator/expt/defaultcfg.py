@@ -3,6 +3,15 @@
 base_data_folder = '../data'
 
 # default actual experiment data access
+# actual = {
+#     'base_folder': '../data/expt',
+#     'type_map': {
+#         'OR': 'or_test',
+#         'BF': 'bf_test',
+#         'ALL': 'all'
+#     }
+# }
+#
 actual = {
     'base_folder': '../data/expt',
     'type_map': {

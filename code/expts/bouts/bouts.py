@@ -27,8 +27,10 @@ def bouts_datafile(inpath, outpath):
     df = load_data(inpath)
     df = df[df.bout_num != -1]  # include only valid bouts
 
-    idx_cols = ['source', 'id', 'height', 'stimulus_speed', 'direction', 'seg_id', 'bout_num']
-    bout_cols = ['bout_initial_speed', 'bout_peak_speed', 'bout_displacement', 'bout_duration', 'omr_bout']
+    idx_cols = ['id', 'height', 'stimulus_speed', 'direction', 'seg_id', 'bout_num']
+    # idx_cols = ['source', 'id', 'height', 'stimulus_speed', 'direction', 'seg_id', 'bout_num']
+    bout_cols = ['bout_initial_speed', 'bout_peak_speed', 'bout_displacement', 'bout_duration',
+                 'omr_bout', 'active_duration']
 
     bouts_df = df[idx_cols + bout_cols].groupby(idx_cols).first().reset_index()
     print(f'total bouts: {len(bouts_df)}')
@@ -53,3 +55,19 @@ def process_bouts(datadir, bouts_ts_f, bouts_f):
 
     # generate bout-level data
     bouts_datafile(bouts_ts_path, bouts_path)
+
+
+if __name__ == '__main__':
+    def test():
+        inf = "../data/expt/or_test/bouts_ts.feather"
+        outf = "../data/expt/or_test/bouts.feather"
+        # ids_sessf = "../data/expt/or_test/bout_ids_sess.feather"
+        # ts_sessf = "../data/expt/or_test/bout_ts_sess.feather"
+
+        # df = pd.read_feather(inf)
+        # df = df[(df.stimulus_speed == stimulus_speed) & (df.id == subj_id) & (df.direction == direction)]
+        # save_data(df, ids_sessf)
+        bouts_datafile(inpath=inf, outpath=outf)
+
+
+    test()

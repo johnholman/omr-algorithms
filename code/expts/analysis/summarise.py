@@ -48,3 +48,17 @@ def prune(group_summ_f, dirs, group_summ_pruned_f):
         df = load_data(inpath)
         df = df[df.stimulus_speed >= 1.0]
         save_data(df, outpath)
+
+
+if __name__ == '__main__':
+    def test():
+        # data_folder = "../data/expt/or_test/"
+        data_folder = "../data/expt/bf_test/"
+        bouts_ts_f = 'bouts_ts.feather'  # filename for timeseries data including trajectory and bout info
+        session_f = 'session.csv'  # filename for session-level summary
+        group_f = 'group_summ.csv'  # filename for group summary
+
+        summarise(data_folder, bouts_ts_f=bouts_ts_f, session_f=session_f, group_f=group_f)
+
+
+    test()

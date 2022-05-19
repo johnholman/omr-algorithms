@@ -346,7 +346,8 @@ def get_means():
     # alldf = pd.concat((ordf, bfdf)).reset_index(drop=True)
 
     alldf = get_actual_summ()
-    means = alldf.mean()[['bout_rate', 'bout_init_speed', 'swim_speed', 'omr_ratio']]
+    means = alldf[['bout_rate', 'bout_init_speed', 'swim_speed', 'omr_ratio']].mean()
+    # means = alldf.mean()[['bout_rate', 'bout_init_speed', 'swim_speed', 'omr_ratio']]
     print(means)
     return means
 

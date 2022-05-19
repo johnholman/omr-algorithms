@@ -15,16 +15,17 @@ def summarise_traverses(df):
     # sum
     df = trajsumm_df[
         ['id', 'height', 'stimulus_speed', 'group_id', 'direction', 'duration', 'displacement', 'num_bouts',
-         'total_bis']]
+         'total_bis', 'active_duration']]
     tvdf = df.groupby(['id', 'height', 'stimulus_speed', 'group_id', 'direction']).sum().reset_index()
 
     swim_speed = tvdf.displacement / tvdf.duration
     bout_rate = tvdf.num_bouts / tvdf.duration
     bout_dist = (tvdf.displacement / tvdf.num_bouts).replace(np.inf, np.nan)
     bout_init_speed = (tvdf.total_bis / tvdf.num_bouts).replace(np.inf, np.nan)
+    bout_active_duration = (tvdf.active_duration / tvdf.num_bouts).replace(np.inf, np.nan)
     tvdf = tvdf.drop(columns=['total_bis'])
-    tvdf = tvdf.assign(swim_speed=swim_speed, bout_rate=bout_rate, bout_dist=bout_dist, bout_init_speed=bout_init_speed)
-
+    tvdf = tvdf.assign(swim_speed=swim_speed, bout_rate=bout_rate, bout_dist=bout_dist, bout_init_speed=bout_init_speed,
+                       bout_active_duration=bout_active_duration)
     # only include traverses with at least one OMR-consistent bout
     tvdf = tvdf[tvdf.num_bouts != 0]
 
@@ -39,18 +40,77 @@ def traj_summary(traj_df):
 
     displacement = last.xpos - first.xpos if first.direction == 'F' else first.xpos - last.xpos
 
-    # count valid OMR bouts and compute sum of their initial speeds
+    # count valid OMR bouts and compute sum of their initial speeds and active durations for different thresholds
     boutgps = traj_df[traj_df.omr_bout & (traj_df.bout_num != -1)].groupby(['bout_num'])
     num_bouts = len(boutgps)
     total_initial_speed = boutgps.bout_initial_speed.first().sum()
+    active_duration = boutgps.active_duration.first().sum()
 
     # add group identifier
     group_id = f'{first.height}_{first.stimulus_speed:.2f}'
 
     return pd.Series(
         {'group_id': group_id, 'duration': duration, 'displacement': displacement, 'num_bouts': num_bouts,
-         'total_bis': total_initial_speed})
+         'total_bis': total_initial_speed, 'active_duration': active_duration }
+    )
 
+
+# def summarise_traverses(df):
+#     # select OMR trajectory timesteps
+#     df = df[(~df.prune) & (df.traj_id != -1) & (df.direction != 'N')]
+#
+#     # create summary table at trajectory level
+#     trajsumm_df = df.groupby(['id', 'height', 'stimulus_speed', 'direction', 'seg_id', 'traj_id'],
+#                              sort=False).apply(traj_summary).reset_index()
+#
+#     # sum
+#     df = trajsumm_df[
+#         ['id', 'height', 'stimulus_speed', 'group_id', 'direction', 'duration', 'displacement', 'num_bouts',
+#          'total_bis', 'active_duration2', 'active_duration4', 'active_duration6', ]]
+#     tvdf = df.groupby(['id', 'height', 'stimulus_speed', 'group_id', 'direction']).sum().reset_index()
+#
+#     swim_speed = tvdf.displacement / tvdf.duration
+#     bout_rate = tvdf.num_bouts / tvdf.duration
+#     bout_dist = (tvdf.displacement / tvdf.num_bouts).replace(np.inf, np.nan)
+#     bout_init_speed = (tvdf.total_bis / tvdf.num_bouts).replace(np.inf, np.nan)
+#     bout_active_duration2 = (tvdf.active_duration2 / tvdf.num_bouts).replace(np.inf, np.nan)
+#     bout_active_duration4 = (tvdf.active_duration4 / tvdf.num_bouts).replace(np.inf, np.nan)
+#     bout_active_duration6 = (tvdf.active_duration6 / tvdf.num_bouts).replace(np.inf, np.nan)
+#     tvdf = tvdf.drop(columns=['total_bis'])
+#     tvdf = tvdf.assign(swim_speed=swim_speed, bout_rate=bout_rate, bout_dist=bout_dist, bout_init_speed=bout_init_speed,
+#                        bout_active_duration2=bout_active_duration2, bout_active_duration4=bout_active_duration4,
+#                        bout_active_duration6=bout_active_duration6)
+#
+#     # only include traverses with at least one OMR-consistent bout
+#     tvdf = tvdf[tvdf.num_bouts != 0]
+#
+#     return tvdf
+#
+
+# def traj_summary(traj_df):
+#     first = traj_df.iloc[0]
+#     last = traj_df.iloc[-1]
+#
+#     duration = (last.time - first.time).total_seconds()
+#
+#     displacement = last.xpos - first.xpos if first.direction == 'F' else first.xpos - last.xpos
+#
+#     # count valid OMR bouts and compute sum of their initial speeds and active durations for different thresholds
+#     boutgps = traj_df[traj_df.omr_bout & (traj_df.bout_num != -1)].groupby(['bout_num'])
+#     num_bouts = len(boutgps)
+#     total_initial_speed = boutgps.bout_initial_speed.first().sum()
+#     active_duration2 = boutgps.active_duration2.first().sum()
+#     active_duration4 = boutgps.active_duration4.first().sum()
+#     active_duration6 = boutgps.active_duration6.first().sum()
+#
+#     # add group identifier
+#     group_id = f'{first.height}_{first.stimulus_speed:.2f}'
+#
+#     return pd.Series(
+#         {'group_id': group_id, 'duration': duration, 'displacement': displacement, 'num_bouts': num_bouts,
+#          'total_bis': total_initial_speed, 'active_duration2': active_duration2, 'active_duration4': active_duration4,
+#          'active_duration6': active_duration6, }
+#     )
 
 if __name__ == '__main__':
     def test():

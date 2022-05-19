@@ -70,7 +70,8 @@ def indiv_track_fig(df, *, height, ss, sid):
 
     fig, ax = plt.subplots()
 
-    ax.plot(df['time'] / 1000, df['xpos'])
+    ax.scatter(df['time'] / 1000, df['xpos'], s=1)
+    # ax.plot(df['time'] / 1000, df['xpos'])
     #     ax.legend()
     ax.grid()
     ax.set_xlabel('time')

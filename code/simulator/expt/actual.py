@@ -22,9 +22,21 @@ def get_actual_dir(proc=None):
     return path
 
 
+def get_actual_data(proc=None):
+    """
+    Return full experimental data for the given procedure or all procedures
+    :param proc: procedure code, or data for all procedures if None (default)
+    :return: the data
+    """
+    fname = 'bouts_ts'
+    folder = get_actual_dir(proc)
+    df = retrieve_data(os.path.join(folder, fname))
+    return df
+
+
 def get_actual_summ(proc=None, full=False):
     """
-    Return experimental data for the given procedure or all procedures
+    Return summary of experimental data for the given procedure or all procedures
     :param proc: procedure code, or data for all procedures if None (default)
     :param full: whether to return all data or data excluding outliers
     :return: the data
