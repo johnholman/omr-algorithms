@@ -9,7 +9,7 @@ from simulator.sessrun.util import get_data_folders
 
 
 def create_figure(nplots=1, nrows=1, hsize=None, vsize=None, fig_name=None, size=None,
-                  hspace=None, wspace=None, h_pad=None, w_pad=None):
+                  hspace=None, wspace=None, h_pad=None, w_pad=None, sharex=False, sharey=False, **kwargs):
     """Return figure and list of axes
     """
 
@@ -43,10 +43,10 @@ def create_figure(nplots=1, nrows=1, hsize=None, vsize=None, fig_name=None, size
     _, project, expt_name = get_data_folders()
 
     fignum = f'{fig_name}' if fig_name else f'{expt_name} {next_fignum()}'
-    fig = plt.figure(figsize=(hsize, vsize), num=fignum, constrained_layout=True)
+    fig = plt.figure(figsize=(hsize, vsize), num=fignum, layout='constrained', **kwargs)
     fig.set_constrained_layout_pads(w_pad=w_pad, h_pad=h_pad, wspace=wspace, hspace=hspace)
 
-    axes = fig.subplots(nrows, ncolumns, squeeze=False)
+    axes = fig.subplots(nrows, ncolumns, squeeze=False, sharex=sharex, sharey=sharey)
     if nplots == 1:
         axes = axes[0][0]
 

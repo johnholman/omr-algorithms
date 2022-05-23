@@ -4,3 +4,5 @@
 *#
 .*.md.html
 *_test.py
+data/*
+figs/*

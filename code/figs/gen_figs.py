@@ -18,11 +18,11 @@ def main():
     plt.rcParams['figure.constrained_layout.hspace'] = 0
     plt.rcParams['figure.constrained_layout.wspace'] = 0
 
-    plt.rcParams['axes.labelsize'] = 8
-    plt.rcParams['axes.titlesize'] = 8
+    plt.rcParams['axes.labelsize'] = 7.5
+    plt.rcParams['axes.titlesize'] = 7.5
     plt.rcParams['axes.labelpad'] = 3
-    plt.rcParams['xtick.labelsize'] = 7
-    plt.rcParams['ytick.labelsize'] = 7
+    plt.rcParams['xtick.labelsize'] = 6.5
+    plt.rcParams['ytick.labelsize'] = 6.5
     plt.rcParams['xtick.major.pad'] = 2
     plt.rcParams['ytick.major.pad'] = 1
     plt.rcParams['legend.fontsize'] = 7
@@ -72,14 +72,29 @@ def main():
     fig = quartile_profile_fig(fig_name=fig_name, size=(110, 55))
     save_figure(fig, fig_name, fig_dir, formats=formats)
 
-    fig_name = '3C - model 1 fitted to OR on swim speed'
+    fig_name = '3B - sample trace for basic model'
+    group_id = '8'
+    expt = 'li_single_o_ribo'
+    dep_vars = ['swim_speed', 'optic_flow', 'sensed_flow', 'generator_input', 'scaled_impulse']
+    event_times = [25.29, 25.51, 25.68, 25.88, 26.10, 26.27, 26.31]
+    event_colors = ['red', 'red', 'red', 'green', 'green', 'green', 'magenta']
+    event_styles = ['dotted', 'dashdot', 'dashed', 'dotted', 'dashdot', 'dashed', 'dotted']
+    event_letters = 'abcdefg'
+    start_time = 25.25
+    end_time = 26.50
+    fig = signal_fig(expt_name=expt, proj_name=proj_name, dep_vars=dep_vars, group_id=group_id,
+                     start_time=start_time, end_time=end_time, event_times=event_times, event_colors=event_colors,
+                     event_styles=event_styles, event_letters=event_letters, fig_name=fig_name, size=(100, 100))
+    save_figure(fig, fig_name, fig_dir, formats=formats)
+
+    fig_name = '3D - model 1 fitted to OR on swim speed'
     expts = ['li_single_o_sbo']
     dept_vars = ['swim_speed', 'omr_ratio']
     fig = compare_fig(expts=expts, procs=['OR'], dep_vars=dept_vars, proj_name=proj_name,
                       fig_name=fig_name, vars_in_cols=False, size=(90, 60))
     save_figure(fig, fig_name, fig_dir, formats=formats)
 
-    fig_name = '3D - model 1 fitted to BF on swim speed'
+    fig_name = '3E - model 1 fitted to BF on swim speed'
     expts = ['li_single_b_sbo']
     dept_vars = ['swim_speed', 'omr_ratio']
     fig = compare_fig(expts=expts, procs=['BF'], dep_vars=dept_vars, proj_name=proj_name,
