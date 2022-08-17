@@ -51,7 +51,7 @@ def main():
     save_figure(fig, fig_name, fig_dir, formats=formats)
 
     fig_name = '3B - bout duration histogram'
-    fig = bout_duration_fig(size=(65, 55))
+    fig = bout_duration_fig(fig_name=fig_name, size=(65, 55))
     save_figure(fig, fig_name, fig_dir, formats=formats)
 
     fig_name = '3C - BF expt results - swim speed & OMR ratio'
@@ -109,7 +109,7 @@ def main():
              }
     measurements = {
         'bout rate': 'bout_rate',
-        'bout intensity': 'bout_init_speed',
+        'bout initial speed': 'bout_init_speed',
         'swim speed': 'swim_speed',
     }
     fig = errs_fig(expts, measurements, fig_name=fig_name, size=(55, 55))
@@ -138,8 +138,7 @@ def main():
     }
     measurements = {
         'bout rate': 'bout_rate',
-        'bout intensity': 'bout_init_speed',
-        # 'overall bout fit': 'cost',
+        'bout initial speed': 'bout_init_speed',
         'swim speed': 'swim_speed',
     }
     fig = errs_fig(expts, measurements=measurements, fig_name=fig_name, size=(70, 50))

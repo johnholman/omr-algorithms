@@ -49,15 +49,20 @@ def process_expt_data():
     # tracked_f = 'tracked.feather'  # filename for input data of tracked positions
     tracked_f = 'tracked.csv.gz'  # filename for input data of tracked positions
     bouts_ts_f = 'bouts_ts.feather'  # filename for timeseries data including trajectory and bout info
-    bouts_f = 'bouts.feather'  # filename for output bout-level data
     session_f = 'session.csv'  # filename for session-level summary
     group_f = 'group_summ.csv'  # filename for group summary
     group_pruned_f = 'group_summ_pruned.csv'  # filename for group summary data excluding outliers
+
+    # bout summary files
+    bouts_f = 'bouts_summ.feather'  # filename for output bout-level data
+    bouts_sess_summ_f = "bouts_sess_summ.csv"  # filename for session-level bout summary data
+    bouts_group_summ_f = "bouts_group_summ.csv"  # filename for group-level bout summary data
 
     base_folder = os.path.abspath(os.path.expanduser(base_folder))
     or_folder = os.path.join(base_folder, or_subfolder)
     bf_folder = os.path.join(base_folder, bf_subfolder)
     all_folder = os.path.join(base_folder, all_subfolder)
+
     print('Processing OR data')
     or_pipeline(or_folder, tracked_f=tracked_f, bouts_ts_f=bouts_ts_f, session_f=session_f, group_f=group_f)
     print('Processing BF data')
@@ -66,7 +71,8 @@ def process_expt_data():
     prune(group_f, [or_folder, bf_folder], group_pruned_f)
     print('Combining timeseries data and group summaries for both experiments')
     combine_multi([bouts_ts_f, group_f, group_pruned_f], [or_folder, bf_folder], ['OR', 'BF'], all_folder)
-    process_bouts(datadir=all_folder, bouts_ts_f=bouts_ts_f, bouts_f=bouts_f)
+    process_bouts(datadir=all_folder, bouts_ts_f=bouts_ts_f, bouts_f=bouts_f, bouts_sess_summ_f=bouts_sess_summ_f,
+                  bouts_group_summ_f=bouts_group_summ_f)
 
 
 if __name__ == '__main__':

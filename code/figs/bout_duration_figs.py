@@ -17,7 +17,7 @@ def bout_duration_fig(expt_dir=None, fig_name=None, **kwargs):
 
     if expt_dir is None:
         expt_dir = get_actual_dir('ALL')
-    boutsf = os.path.join(expt_dir, 'bouts')
+    boutsf = os.path.join(expt_dir, 'bouts_summ')
     allbouts = retrieve_data(boutsf)
     # boutsf = '~/data/ezfish/analysis/common/bouts.feather'
     # allbouts = load_data(boutsf)
