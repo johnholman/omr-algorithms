@@ -151,7 +151,7 @@ def expt_fig_directionality(procs, dept_vars, fig_name=None, xlim_map=None, ylim
     # show legend for the top-left plot only
     # axs[0][0].legend(loc='lower left', bbox_to_anchor=(0.04, 0.63), frameon=False)
     # axs[0][0].legend(loc='lower left', bbox_to_anchor=(0.04, 0.53), frameon=False, title='height')
-    axs[0][0].legend(loc='lower left', bbox_to_anchor=(0.0, 0.0), frameon=False, title='height')
+    axs[0][0].legend(loc='lower left', bbox_to_anchor=(0.0, 0.0), frameon=False, title='Height')
 
     return fig
 

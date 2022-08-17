@@ -29,10 +29,12 @@ def grouped_bar_chart(ax, data_df, *, legend_title=None, x_label=None, y_label=N
 
     wid = 1 / (ncols + 1)  # leave one bar space between each group
     x0 = np.arange(nrows)  # position of first bar in each group
-    for m, col in enumerate(data_df.columns):
+
+    colors = ('pink', 'turquoise', 'gold')
+    for m, (var, color) in enumerate(zip(data_df.columns, colors)):
         x = x0 + m * wid
-        y = data_df[col]
-        ax.bar(x, y, wid)
+        y = data_df[var]
+        ax.bar(x, y, wid, color=color)
 
     ax.set_ylabel(y_label)
     ax.set_xlabel(x_label)
@@ -44,6 +46,28 @@ def grouped_bar_chart(ax, data_df, *, legend_title=None, x_label=None, y_label=N
     ax.legend(title=legend_title, labels=data_df.columns, frameon=False,)
     ax.grid(grid)
 
+# def grouped_bar_chart(ax, data_df, *, legend_title=None, x_label=None, y_label=None, grid=False, **_kwargs):
+#     nrows = len(data_df)
+#     ncols = len(data_df.columns)
+#
+#     wid = 1 / (ncols + 1)  # leave one bar space between each group
+#     x0 = np.arange(nrows)  # position of first bar in each group
+#
+#     for m, col in enumerate(data_df.columns):
+#         x = x0 + m * wid
+#         y = data_df[col]
+#         ax.bar(x, y, wid)
+#
+#     ax.set_ylabel(y_label)
+#     ax.set_xlabel(x_label)
+#
+#     ncols = len(data_df.columns)
+#     xtick = x0 + ((ncols - 1) / 2) * wid  # place label in centre of group of bars
+#     ax.set_xticks(xtick)
+#     ax.set_xticklabels(data_df.index)
+#     ax.legend(title=legend_title, labels=data_df.columns, frameon=False,)
+#     ax.grid(grid)
+#
 def test():
     ri = ['bout_rate', 'bout_init_speed']
 

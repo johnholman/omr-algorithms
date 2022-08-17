@@ -40,41 +40,41 @@ def main():
     ri = ['bout_rate', 'bout_init_speed']
     s = ['swim_speed']
 
-    fig_name = '1E - OR expt results - swim speed & OMR ratio'
+    fig_name = '2E - OR expt results - swim speed & OMR ratio'
     dept_vars = ['swim_speed', 'omr_ratio']
-    fig = expt_fig(procs=['OR'], dept_vars=dept_vars, fig_name=fig_name, size=(90, 50))
+    fig = expt_fig(procs=['OR'], dept_vars=dept_vars, fig_name=fig_name, size=(90, 57))
     save_figure(fig, fig_name, fig_dir, formats=formats)
 
-    fig_name = '1F - OR expt results - bout measures'
+    fig_name = '2F - OR expt results - bout measures'
     dept_vars = ['bout_rate', 'bout_init_speed']
-    fig = expt_fig(procs=['OR'], dept_vars=dept_vars, fig_name=fig_name, size=(90, 50))
+    fig = expt_fig(procs=['OR'], dept_vars=dept_vars, fig_name=fig_name, size=(90, 57))
     save_figure(fig, fig_name, fig_dir, formats=formats)
 
-    fig_name = '2B - bout duration histogram'
+    fig_name = '3B - bout duration histogram'
     fig = bout_duration_fig(size=(65, 55))
     save_figure(fig, fig_name, fig_dir, formats=formats)
 
-    fig_name = '2C - BF expt results - swim speed & OMR ratio'
+    fig_name = '3C - BF expt results - swim speed & OMR ratio'
     dept_vars = ['swim_speed', 'omr_ratio']
     fig = expt_fig(procs=['BF'], dept_vars=dept_vars, fig_name=fig_name, size=(90, 50),
                    ylim_map={'omr_ratio': (0, 8)})
     save_figure(fig, fig_name, fig_dir, formats=formats)
 
-    fig_name = '2D - BF expt results - bout measures'
+    fig_name = '3D - BF expt results - bout measures'
     dept_vars = ['bout_rate', 'bout_init_speed']
     fig = expt_fig(procs=['BF'], dept_vars=dept_vars, fig_name=fig_name, size=(90, 50),
                    ylim_map={'omr_ratio': (0, 8)})
     save_figure(fig, fig_name, fig_dir, formats=formats)
 
-    fig_name = '2E - overall bout intensity profiles'
+    fig_name = '3E - overall bout intensity profiles'
     fig = overall_profile_fig(fig_name=fig_name, size=(55, 55))
     save_figure(fig, fig_name, fig_dir, formats=formats)
 
-    fig_name = '2F - quartile bout intensity profiles'
+    fig_name = '3F - quartile bout intensity profiles'
     fig = quartile_profile_fig(fig_name=fig_name, size=(110, 55))
     save_figure(fig, fig_name, fig_dir, formats=formats)
 
-    fig_name = '3B - sample trace for basic model'
+    fig_name = '4B - sample trace for basic model'
     group_id = '8'
     expt = 'li_single_o_ribo'
     dep_vars = ['swim_speed', 'optic_flow', 'sensed_flow', 'generator_input', 'scaled_impulse']
@@ -89,21 +89,21 @@ def main():
                      event_styles=event_styles, event_letters=event_letters, fig_name=fig_name, size=(100, 100))
     save_figure(fig, fig_name, fig_dir, formats=formats)
 
-    fig_name = '3D - model 1 fitted to OR on swim speed'
+    fig_name = '4D - model 1 fitted to OR on swim speed'
     expts = ['li_single_o_sbo']
     dept_vars = ['swim_speed', 'omr_ratio']
     fig = compare_fig(expts=expts, procs=['OR'], dep_vars=dept_vars, proj_name=proj_name,
                       fig_name=fig_name, vars_in_cols=False, size=(90, 60))
     save_figure(fig, fig_name, fig_dir, formats=formats)
 
-    fig_name = '3E - model 1 fitted to BF on swim speed'
+    fig_name = '4E - model 1 fitted to BF on swim speed'
     expts = ['li_single_b_sbo']
     dept_vars = ['swim_speed', 'omr_ratio']
     fig = compare_fig(expts=expts, procs=['BF'], dep_vars=dept_vars, proj_name=proj_name,
                       fig_name=fig_name, vars_in_cols=False, size=(90, 60))
     save_figure(fig, fig_name, fig_dir, formats=formats)
 
-    fig_name = '4A - prediction errors for basic model'
+    fig_name = '5A - prediction errors for basic model'
     expts = {'swim speed fit': ('li_single_sbo_fit', 'sim', s),
              'bout data fit': ('li_single_ribo_fit', 'sim', ri),
              }
@@ -115,21 +115,21 @@ def main():
     fig = errs_fig(expts, measurements, fig_name=fig_name, size=(55, 55))
     save_figure(fig, fig_name, fig_dir, formats=formats)
 
-    fig_name = '4C - bout rates for basic model fitted to bout stats'
+    fig_name = '5C - bout rates for basic model fitted to bout stats'
     expts = ['li_single_o_ribo', 'li_single_b_ribo']
     dept_vars = ['bout_rate']
     fig = compare_fig(expts=expts, proj_name=proj_name, procs=['OR', 'BF'], dep_vars=dept_vars, fig_name=fig_name,
                       size=(90, 60))
     save_figure(fig, fig_name, fig_dir, formats=formats)
 
-    fig_name = '4D - bout rates with improved bout generator'
+    fig_name = '5D - bout rates with improved bout generator'
     expts = ['limi_emp_o_rbo', 'limi_emp_b_rbo']
     dept_vars = ['bout_rate']
     fig = compare_fig(expts=expts, proj_name=proj_name, procs=['OR', 'BF'], dep_vars=dept_vars, fig_name=fig_name,
                       size=(90, 60))
     save_figure(fig, fig_name, fig_dir, formats=formats)
 
-    fig_name = '5A - prediction errors for model variants'
+    fig_name = '6A - prediction errors for model variants'
     expts = {
         'basic model': ('li_single_ribo_fit', 'sim', ri),
         'model A': ('pmi_li_ribo_fit', 'sim', ri),
@@ -145,21 +145,21 @@ def main():
     fig = errs_fig(expts, measurements=measurements, fig_name=fig_name, size=(70, 50))
     save_figure(fig, fig_name, fig_dir, formats=formats)
 
-    fig_name = '5B - model C compared to experimental OMR data'
+    fig_name = '6B - model C compared to experimental OMR data'
     expts = ['pmi_fli_o_ribo']
     dept_vars = ['bout_rate', 'bout_init_speed', 'swim_speed']
     fig = compare_fig(expts=expts, proj_name=proj_name, procs=['OR'], dep_vars=dept_vars, fig_name=fig_name,
-                      size=(55, 130))
+                      size=(55, 170))
     save_figure(fig, fig_name, fig_dir, formats=formats)
 
-    fig_name = '5C - model C compared to experimental BF data'
+    fig_name = '6C - model C compared to experimental BF data'
     expts = ['pmi_fli_b_ribo']
     dept_vars = ['bout_rate', 'bout_init_speed', 'swim_speed']
     fig = compare_fig(expts=expts, proj_name=proj_name, procs=['BF'], dep_vars=dept_vars, fig_name=fig_name,
-                      size=(55, 130))
+                      size=(55, 170))
     save_figure(fig, fig_name, fig_dir, formats=formats)
 
-    fig_name = '5D - sample trace for model C'
+    fig_name = '6D - sample trace for model C'
     group_id = '8'
     expt = 'pmi_fli_o_ribo'
     dep_vars = ['optic_flow', 'sensed_flow', 'poisson_rate', 'scaled_impulse', 'swim_speed']
@@ -184,7 +184,7 @@ def main():
 
     fig_name = 'S3 - bout duration'
     dept_vars = ['bout_active_duration']
-    fig = expt_fig_one_var(procs=['OR', 'BF'], dept_vars=dept_vars, fig_name=fig_name, size=(110, 50))
+    fig = expt_fig_one_var(procs=['OR', 'BF'], dept_vars=dept_vars, fig_name=fig_name, size=(110, 60))
     save_figure(fig, fig_name, fig_dir, formats=formats)
 
     fig_name = 'S4 - BF bout measures for moderate stimulus speeds'
@@ -203,28 +203,28 @@ def main():
     expts = ['pmi_li_o_ribo']
     dept_vars = ['bout_rate', 'bout_init_speed', 'swim_speed']
     fig = compare_fig(expts=expts, proj_name=proj_name, procs=['OR'], dep_vars=dept_vars, fig_name=fig_name,
-                      vars_in_cols=False, size=(140, 50))
+                      vars_in_cols=False, size=(140, 60))
     save_figure(fig, fig_name, fig_dir, formats=formats)
 
     fig_name = 'S6B - model A compared to experimental BF data'
     expts = ['pmi_li_b_ribo']
     dept_vars = ['bout_rate', 'bout_init_speed', 'swim_speed']
     fig = compare_fig(expts=expts, proj_name=proj_name, procs=['BF'], dep_vars=dept_vars, fig_name=fig_name,
-                      vars_in_cols=False, size=(140, 50))
+                      vars_in_cols=False, size=(140, 60))
     save_figure(fig, fig_name, fig_dir, formats=formats)
 
     fig_name = 'S6C - model B compared to experimental OMR data'
     expts = ['pmi_fbli_o_ribo']
     dept_vars = ['bout_rate', 'bout_init_speed', 'swim_speed']
     fig = compare_fig(expts=expts, proj_name=proj_name, procs=['OR'], dep_vars=dept_vars, fig_name=fig_name,
-                      vars_in_cols=False, size=(140, 50))
+                      vars_in_cols=False, size=(140, 60))
     save_figure(fig, fig_name, fig_dir, formats=formats)
 
     fig_name = 'S6D - model B compared to experimental BF data'
     expts = ['pmi_fbli_b_ribo']
     dept_vars = ['bout_rate', 'bout_init_speed', 'swim_speed']
     fig = compare_fig(expts=expts, proj_name=proj_name, procs=['BF'], dep_vars=dept_vars, fig_name=fig_name,
-                      vars_in_cols=False, size=(140, 50))
+                      vars_in_cols=False, size=(140, 60))
     save_figure(fig, fig_name, fig_dir, formats=formats)
 
     print('finished')

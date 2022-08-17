@@ -49,10 +49,10 @@ def plot_quartile_profiles(df, ax, column):
     df4 = df[df[column] > q3]
     p4 = calc_profile(df4)
 
-    ax.plot(range(0, 1000, 10), p1, label='first')
-    ax.plot(range(0, 1000, 10), p2, label='second')
-    ax.plot(range(0, 1000, 10), p3, label='third')
-    ax.plot(range(0, 1000, 10), p4, label='fourth')
+    ax.plot(range(0, 1000, 10), p1, label='first', color='black')
+    ax.plot(range(0, 1000, 10), p2, label='second', color='cyan')
+    ax.plot(range(0, 1000, 10), p3, label='third', color='purple')
+    ax.plot(range(0, 1000, 10), p4, label='fourth', color='red')
     ax.legend(title='quartile', frameon=False)
     ax.set_xlabel('time after bout start (ms)')
     ax.set_ylabel('relative speed')
@@ -73,10 +73,10 @@ def overall_profile_fig(expt_dir=None, fig_name=None, **kwargs):
     fig, ax = create_figure(fig_name=fig_name, **kwargs)
     # fig, axs = create_figure(2, fig_name=fig_name, **kwargs)
 
-    plot_profile(df, ax, label='all bouts')
+    plot_profile(df, ax, label='all bouts', color='indigo')
     # ax.set_title('all bouts')
 
-    plot_profile(df[df.omr_bout], ax, label='OMR bouts')
+    plot_profile(df[df.omr_bout], ax, label='OMR bouts', color='orangered')
 
     ax.legend(frameon=False)
 

@@ -62,6 +62,7 @@ def compare_fig(expts, procs, dep_vars, proj_name=None,
 
     if vars_in_cols:
         default_ylim_map = {
+            # 'swim_speed': (2, 28),
             'swim_speed': (2, 24),
             'omr_ratio': (0.5, 2),
             'bout_rate': (1.25, 3.0),
@@ -69,7 +70,7 @@ def compare_fig(expts, procs, dep_vars, proj_name=None,
         }
     else:
         default_ylim_map = {
-            'swim_speed': (2, 28),
+            'swim_speed': (2, 32),
             'omr_ratio': (0.5, 2),
             'bout_rate': (1.25, 2.8),
             'bout_init_speed': (5, 60),
@@ -193,7 +194,7 @@ def show_legend(ax):
                blank, lines[0], lines[1], lines[2],
                blank, lines[3], lines[4], lines[5]
                ]
-    labels = ['', 'low', 'med', 'high',
+    labels = ['Height  ', 'low', 'med', 'high',
               'actual', '', '', '',
               'predicted', '', '', '']
 
@@ -203,6 +204,25 @@ def show_legend(ax):
     # ax.legend(handles, labels, ncol=3, handletextpad=-3.7, borderpad=0, frameon=False,
     #           loc='lower left', bbox_to_anchor=(0.12, 0.66))
     #
+# def show_legend(ax):
+#     lines = ax.get_lines()
+#
+#     blank = Rectangle((0, 0), 1, 1, fc="w", fill=False, edgecolor='none', linewidth=0)
+#
+#     handles = [blank, blank, blank, blank,
+#                blank, lines[0], lines[1], lines[2],
+#                blank, lines[3], lines[4], lines[5]
+#                ]
+#     labels = ['', 'low', 'med', 'high',
+#               'actual', '', '', '',
+#               'predicted', '', '', '']
+#
+#     ax.legend(handles, labels, ncol=3, handletextpad=-3.7, borderpad=0, frameon=False,
+#               loc='upper left', bbox_to_anchor=(0.12, 0.98))
+#
+#     # ax.legend(handles, labels, ncol=3, handletextpad=-3.7, borderpad=0, frameon=False,
+#     #           loc='lower left', bbox_to_anchor=(0.12, 0.66))
+#     #
 
 
 def show_legend_old(ax):

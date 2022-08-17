@@ -146,7 +146,10 @@ def expt_fig(procs, dept_vars, fig_name=None, xlim_map=None, ylim_map=None, **kw
                 ax.set_ylim(ymin, ymax)
 
     # show legend for the top-left plot only
-    axs[0][0].legend(loc='lower left', bbox_to_anchor=(0.04, 0.63), frameon=False)
+    # axs[0][0].legend(loc='lower left', bbox_to_anchor=(0.04, 0.63), frameon=False)
+    # axs[0][0].legend(loc='lower left', bbox_to_anchor=(0.04, 0.63), frameon=False, title='Height')
+    axs[0][0].legend(loc='upper left', frameon=False, title='Height')
+
 
     return fig
 
@@ -245,7 +248,9 @@ def expt_fig_one_var(procs, dept_vars, fig_name=None, xlim_map=None, ylim_map=No
             ax.set_title(title)
 
     # show legend for first plot only
-    axs[0].legend(loc='lower left', bbox_to_anchor=(0.04, 0.63), frameon=False)
+    # axs[0].legend(loc='lower left', bbox_to_anchor=(0.04, 0.63), frameon=False)
+    axs[0].legend(loc='upper left', frameon=False, title='Height')
+
 
     return fig
 
@@ -253,7 +258,7 @@ def expt_fig_one_var(procs, dept_vars, fig_name=None, xlim_map=None, ylim_map=No
 def test():
     dept_vars = ['bout_active_duration']
     fig_name = ''
-    expt_fig_one_var(procs=['OR', 'BF'], dept_vars=dept_vars, fig_name=fig_name)
+    fig = expt_fig_one_var(procs=['OR', 'BF'], dept_vars=dept_vars, fig_name=fig_name, size=(110, 50))
 
     # expt_fig(procs=['OR', 'BF'], dept_vars=dept_vars, fig_name=fig_name)
     # expt_fig(procs=['BF'], dept_vars=['bout_rate', 'bout_init_speed'], fig_name='bout data for BF expt')
