@@ -21,9 +21,11 @@ def bouts_data(inpath, outpath):
     bouts_df = df[idx_cols + data_cols].groupby(idx_cols).agg(**agg_spec).reset_index()
     print(f'total bouts: {len(bouts_df)}')
 
-    # calculated signed displacement - positive if in same direction as the stimulus
+    # calculated signed displacement - positive if in same direction as the stimulus - and thus whether a forward
+    # bout
     sdisp = bouts_df.end_pos - bouts_df.xpos
     sdisp[bouts_df.direction == 'B'] *= -1
+    forward = sdisp >= 0
 
     # note whether start of bout occurred after goal reached
     group_cols = ['source', 'id', 'height_category', 'stimulus_speed', 'direction']
@@ -35,7 +37,7 @@ def bouts_data(inpath, outpath):
     bf = bouts_df.stimulus_speed / bouts_df.height_category.map(hmap)
 
     # add new columns to data
-    bouts_df = bouts_df.assign(signed_displacement=sdisp, baseline_flow=bf, finished=finished)
+    bouts_df = bouts_df.assign(signed_displacement=sdisp, baseline_flow=bf, forward=forward, finished=finished)
 
     save_data(bouts_df, outpath)
     return bouts_df
@@ -56,13 +58,51 @@ def trial_finished(gdf):
     return pd.Series(finish)
 
 
-def summarise_bouts(bouts_file, bouts_sess_summ_file, bouts_group_summ_file):
+def summarise_bouts(bouts_file: str, bouts_sess_summ_file: str, bouts_group_summ_file: str):
+    """
+    Summmarise bout data at session and group level
+
+    :param bouts_file: path for bouts data file
+    :param bouts_sess_summ_file: path for bouts session summary file
+    :param bouts_group_summ_file: path for bouts group summary file
+    :return: session and group summary dataframes
+    """
     bdf = load_data(bouts_file)
+
+    # report proportion of bouts in same direction as stimulus during OMR trajectories before goal is reached
+    nf = len(bdf[~bdf.finished & bdf.omr_bout & bdf.forward])
+    ntot = len(bdf[~bdf.finished & bdf.omr_bout])
+    print(f'directionality index for bouts in OMR trajectories before goal reached: {nf / ntot:.3f}')
+
+    nf = len(bdf[~bdf.finished & bdf.omr_bout & bdf.forward & (bdf.source == 'OR')])
+    ntot = len(bdf[~bdf.finished & bdf.omr_bout & (bdf.source == 'OR')])
+    print(f'OR: directionality index for bouts in OMR trajectories before goal reached: {nf / ntot:.3f}')
+
+    nf = len(bdf[~bdf.finished & bdf.omr_bout & bdf.forward & (bdf.source == 'BF')])
+    ntot = len(bdf[~bdf.finished & bdf.omr_bout & (bdf.source == 'BF')])
+    print(f'BF: directionality index for bouts in OMR trajectories before goal reached: {nf / ntot:.3f}')
+
+    # report proportion of bouts in same direction as stimulus overall before goal is reached
+
+    nf = len(bdf[~bdf.finished & bdf.forward])
+    ntot = len(bdf[~bdf.finished])
+    print(f'overall directionality index for bouts in trial traverses before goal reached: {nf / ntot:.3f}')
+
+    nf = len(bdf[~bdf.finished & bdf.forward & (bdf.source == 'OR')])
+    ntot = len(bdf[~bdf.finished & (bdf.source == 'OR')])
+    print(f'OR: overall directionality index for bouts before goal reached: {nf / ntot:.3f}')
+
+    nf = len(bdf[~bdf.finished & bdf.forward & (bdf.source == 'BF')])
+    ntot = len(bdf[~bdf.finished & (bdf.source == 'BF')])
+    print(f'BF: overall directionality index for bouts before goal reached: {nf / ntot:.3f}')
 
     # calculate percentages of backward bouts for each traverse
     group_cols = ['source', 'id', 'height_category', 'stimulus_speed', 'baseline_flow', 'direction']
-    btdf = bdf.groupby(group_cols, dropna=False)[['signed_displacement', 'finished']].apply(
+    btdf = bdf.groupby(group_cols, dropna=False)[['forward', 'finished']].apply(
         bouts_traverse_summary).reset_index()
+
+    overall_forward = btdf.forward.mean()
+    print(f"overall proportion of forward bouts: {overall_forward:.2f}")
 
     # average over traverses to get session level summary
     sessdf = btdf.groupby(['source', 'id', 'height_category', 'stimulus_speed'])[
@@ -88,10 +128,19 @@ def summarise_bouts(bouts_file, bouts_sess_summ_file, bouts_group_summ_file):
     return sessdf, gdf
 
 
+# def bouts_traverse_summary(gdf):
+#     total = sum(~gdf.finished)
+#     if total > 0:
+#         forward = sum((gdf.signed_displacement >= 0) & ~ gdf.finished) / sum(~ gdf.finished)
+#     else:
+#         forward = np.nan
+#     s = pd.Series(forward, index=['forward'])
+#     return s
+#
 def bouts_traverse_summary(gdf):
     total = sum(~gdf.finished)
     if total > 0:
-        forward = sum((gdf.signed_displacement >= 0) & ~ gdf.finished) / sum(~ gdf.finished)
+        forward = sum((gdf.forward & ~ gdf.finished) / sum(~ gdf.finished))
     else:
         forward = np.nan
     s = pd.Series(forward, index=['forward'])

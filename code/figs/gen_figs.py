@@ -169,58 +169,58 @@ def main():
                      start_time=start_time, end_time=end_time, fig_name=fig_name, size=(60, 130))
     save_figure(fig, fig_name, fig_dir, formats=formats)
 
-    fig_name = 'S1A - peak speed quartile bout speed profiles'
-    fig = quartile_profile_fig(fig_name=fig_name, quartile_feature='bout_peak_speed', size=(110, 60))
-    save_figure(fig, fig_name, fig_dir, formats=formats)
-
-    fig_name = 'S1B - displacement quartile bout speed profiles'
-    fig = quartile_profile_fig(fig_name=fig_name, quartile_feature='bout_displacement', size=(110, 60))
-    save_figure(fig, fig_name, fig_dir, formats=formats)
-
-    fig_name = 'S2A - BF bout measures for moderate stimulus speeds'
-    dept_vars = ['bout_rate', 'bout_init_speed']
-    fig = expt_fig_limitbf(procs=['BF'], dept_vars=dept_vars, minss=3, maxss=15, fig_name=fig_name, size=(90, 50))
-    save_figure(fig, fig_name, fig_dir, formats=formats)
-
-    fig_name = 'S2B - bout duration'
-    dept_vars = ['bout_active_duration']
-    fig = expt_fig_one_var(procs=['OR', 'BF'], dept_vars=dept_vars, fig_name=fig_name, size=(110, 50))
-    save_figure(fig, fig_name, fig_dir, formats=formats)
-
-    fig_name = 'S2C - directionality index'
+    fig_name = 'S1 - directionality index'
     dept_vars = ['forward']
     fig = expt_fig_directionality(procs=['OR', 'BF'], dept_vars=dept_vars, fig_name=fig_name, size=(120, 60))
     save_figure(fig, fig_name, fig_dir, formats=formats)
 
-    fig_name = 'S3A - rate-only model without motor inhibition'
+    fig_name = 'S2A - peak speed quartile bout speed profiles'
+    fig = quartile_profile_fig(fig_name=fig_name, quartile_feature='bout_peak_speed', size=(110, 60))
+    save_figure(fig, fig_name, fig_dir, formats=formats)
+
+    fig_name = 'S2B - displacement quartile bout speed profiles'
+    fig = quartile_profile_fig(fig_name=fig_name, quartile_feature='bout_displacement', size=(110, 60))
+    save_figure(fig, fig_name, fig_dir, formats=formats)
+
+    fig_name = 'S3 - bout duration'
+    dept_vars = ['bout_active_duration']
+    fig = expt_fig_one_var(procs=['OR', 'BF'], dept_vars=dept_vars, fig_name=fig_name, size=(110, 50))
+    save_figure(fig, fig_name, fig_dir, formats=formats)
+
+    fig_name = 'S4 - BF bout measures for moderate stimulus speeds'
+    dept_vars = ['bout_rate', 'bout_init_speed']
+    fig = expt_fig_limitbf(procs=['BF'], dept_vars=dept_vars, minss=3, maxss=15, fig_name=fig_name, size=(90, 50))
+    save_figure(fig, fig_name, fig_dir, formats=formats)
+
+    fig_name = 'S5A - rate-only model without motor inhibition'
     expts = ['li_emp_o_rbo', 'li_emp_b_rbo']
     dept_vars = ['bout_rate']
     fig = compare_fig(expts=expts, proj_name=proj_name, procs=['OR', 'BF'], dep_vars=dept_vars, fig_name=fig_name,
                       size=(90, 60))
     save_figure(fig, fig_name, fig_dir, formats=formats)
 
-    fig_name = 'S4A - model A compared to experimental OMR data'
+    fig_name = 'S6A - model A compared to experimental OMR data'
     expts = ['pmi_li_o_ribo']
     dept_vars = ['bout_rate', 'bout_init_speed', 'swim_speed']
     fig = compare_fig(expts=expts, proj_name=proj_name, procs=['OR'], dep_vars=dept_vars, fig_name=fig_name,
                       vars_in_cols=False, size=(140, 50))
     save_figure(fig, fig_name, fig_dir, formats=formats)
 
-    fig_name = 'S4B - model A compared to experimental BF data'
+    fig_name = 'S6B - model A compared to experimental BF data'
     expts = ['pmi_li_b_ribo']
     dept_vars = ['bout_rate', 'bout_init_speed', 'swim_speed']
     fig = compare_fig(expts=expts, proj_name=proj_name, procs=['BF'], dep_vars=dept_vars, fig_name=fig_name,
                       vars_in_cols=False, size=(140, 50))
     save_figure(fig, fig_name, fig_dir, formats=formats)
 
-    fig_name = 'S4C - model B compared to experimental OMR data'
+    fig_name = 'S6C - model B compared to experimental OMR data'
     expts = ['pmi_fbli_o_ribo']
     dept_vars = ['bout_rate', 'bout_init_speed', 'swim_speed']
     fig = compare_fig(expts=expts, proj_name=proj_name, procs=['OR'], dep_vars=dept_vars, fig_name=fig_name,
                       vars_in_cols=False, size=(140, 50))
     save_figure(fig, fig_name, fig_dir, formats=formats)
 
-    fig_name = 'S4D - model B compared to experimental BF data'
+    fig_name = 'S6D - model B compared to experimental BF data'
     expts = ['pmi_fbli_b_ribo']
     dept_vars = ['bout_rate', 'bout_init_speed', 'swim_speed']
     fig = compare_fig(expts=expts, proj_name=proj_name, procs=['BF'], dep_vars=dept_vars, fig_name=fig_name,
