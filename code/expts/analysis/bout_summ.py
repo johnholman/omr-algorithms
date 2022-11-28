@@ -98,15 +98,18 @@ def summarise_bouts(bouts_file: str, bouts_sess_summ_file: str, bouts_group_summ
 
     # calculate percentages of backward bouts for each traverse
     group_cols = ['source', 'id', 'height_category', 'stimulus_speed', 'baseline_flow', 'direction']
-    btdf = bdf.groupby(group_cols, dropna=False)[['forward', 'finished']].apply(
+    data_cols = ['forward', 'finished', 'bout_initial_speed', 'bout_duration']
+    btdf = bdf.groupby(group_cols, dropna=False)[data_cols].apply(
         bouts_traverse_summary).reset_index()
 
     overall_forward = btdf.forward.mean()
     print(f"overall proportion of forward bouts: {overall_forward:.2f}")
 
     # average over traverses to get session level summary
-    sessdf = btdf.groupby(['source', 'id', 'height_category', 'stimulus_speed'])[
-        ['baseline_flow', 'forward']].mean().reset_index()
+    data_cols = ['baseline_flow', 'forward', 'corr']
+    sessdf = btdf.groupby(['source', 'id', 'height_category', 'stimulus_speed'])[data_cols].mean().reset_index()
+    # sessdf = btdf.groupby(['source', 'id', 'height_category', 'stimulus_speed'])[
+    #     ['baseline_flow', 'forward']].mean().reset_index()
 
     save_data(sessdf, bouts_sess_summ_file)
 
@@ -143,8 +146,18 @@ def bouts_traverse_summary(gdf):
         forward = sum((gdf.forward & ~ gdf.finished) / sum(~ gdf.finished))
     else:
         forward = np.nan
-    s = pd.Series(forward, index=['forward'])
+    if len(gdf) >= 2:
+        corr = gdf.bout_initial_speed.corr(gdf.bout_duration)
+    else:
+        corr = np.nan
+    s = pd.Series([forward, corr], index=['forward', 'corr'])
     return s
+
+
+
+
+
+
 
 
 if __name__ == '__main__':
@@ -156,5 +169,9 @@ if __name__ == '__main__':
         bouts_group_summ_file = "../data/expt/all/bouts_group_summ.csv"
         sess_df, group_df = summarise_bouts(bouts_file, bouts_sess_summ_file, bouts_group_summ_file)
 
+    def correlation_test():
+        bouts_file = "../data/expt/all/bouts_summ.feather"
 
-    test()
+
+
+    correlation_test()
