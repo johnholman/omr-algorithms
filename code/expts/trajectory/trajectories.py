@@ -146,5 +146,21 @@ def test():
 
 
 if __name__ == '__main__':
-    test()
+    def test_prune():
+        datadir = '../data/expt/or_overall_omr'
+        traj_noprune_fname = 'traj_noprune.feather'
+        extract_path = os.path.join(datadir, traj_noprune_fname)
+        traj_fname = 'traj_ts.feather'
+        traj_path = os.path.join(datadir, traj_fname)
+
+        pd.set_option('display.precision', 5)
+        pd.set_option('display.expand_frame_repr', False)
+        pd.options.display.max_rows = 200
+
+        extract_df = load_data(extract_path)
+        traj_df = prune(extract_df, xmax=320, xmin=50, min_seg_dur=1, min_traj_dur=1, min_traj_speed=0.5)
+        save_data(traj_df, traj_path)
+
+
+    test_prune()
     plt.show()

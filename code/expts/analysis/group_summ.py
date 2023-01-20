@@ -38,14 +38,16 @@ def summarise_groups(session_summ_file, group_summ_file, summary_plots=False):
 
 
 def plot_figs(sdf, title):
-    fig, axes = plt.subplots(2, 3, figsize=(15, 9))
+    fig, axes = plt.subplots(2, 4, figsize=(15, 9))
     plot_lines(axes[0][0], sdf, 'swim_speed', 'swim speed (mm/s)', 'stimulus_speed', 'stimulus speed (mm/s)')
     plot_lines(axes[0][1], sdf, 'omr_ratio', 'OMR ratio', 'stimulus_speed', 'stimulus speed (mm/s)')
-    # plot_lines(axes[0][2], sdf, 'ssbf_ratio', 'SSBF ratio', 'baseline_flow', 'baseline flow (rad/s)')
     plot_lines(axes[1][0], sdf, 'bout_rate', 'bout rate (Hz)', 'stimulus_speed', 'stimulus speed (mm/s)')
     plot_lines(axes[1][1], sdf, 'bout_dist', 'bout distance (mm)', 'stimulus_speed', 'stimulus speed (mm/s)')
     plot_lines(axes[1][2], sdf, 'bout_init_speed', 'initial bout speed (mm/s)', 'stimulus_speed',
                'stimulus speed (mm/s)')
+    plot_lines(axes[0][3], sdf, 'overall_speed', 'overall speed', 'stimulus_speed', 'stimulus_speed (mm/s')
+    plot_lines(axes[1][3], sdf, 'overall_omr_ratio', 'overall OMR ratio', 'stimulus_speed', 'stimulus_speed (mm/s')
+
     fig.tight_layout(rect=(0, 0, 1, 0.97))
     fig.text(0.1, 0.97, title, fontsize='large')
 

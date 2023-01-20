@@ -77,6 +77,9 @@ def add_derived_data(df, mean_heights):
     if 'b_dist' in df.columns and 'b_dur' in df.columns:
         df['b_speed'] = df['b_dist'] / df['b_dur'] * 1000
 
+    # add overall OMR ratio (i.e. including behaviour when not in OMR trajectories
+    df['overall_omr_ratio'] = df['overall_speed']/df['stimulus_speed']
+
     print(f'with derived variables:\n{df.head(10)}')
 
     return df

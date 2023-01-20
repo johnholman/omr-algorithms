@@ -226,6 +226,11 @@ def main():
                       vars_in_cols=False, size=(140, 60))
     save_figure(fig, fig_name, fig_dir, formats=formats)
 
+    fig_name = 'SX - OR expt results - overall swim speed & OMR ratio'
+    dept_vars = ['overall_speed', 'overall_omr_ratio']
+    fig = expt_fig(procs=['OR'], dept_vars=dept_vars, fig_name=fig_name, size=(90, 57))
+    save_figure(fig, fig_name, fig_dir, formats=formats)
+
     print('finished')
 
 

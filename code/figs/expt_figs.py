@@ -82,7 +82,9 @@ def expt_fig(procs, dept_vars, fig_name=None, xlim_map=None, ylim_map=None, **kw
         'baseline_speed': 'baseline stimulus speed (mm/s)',
         'omr_ratio': 'OMR ratio',
         'baseline_flow': 'baseline flow (rad/s)',
-        'bout_active_duration': 'bout duration (s)'
+        'bout_active_duration': 'bout duration (s)',
+        'overall_speed': 'overall swim speed (mm/s)',
+        'overall_omr_ratio': 'overall OMR ratio',
     }
 
     default_xlim_map = {

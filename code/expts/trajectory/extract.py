@@ -105,7 +105,6 @@ def extract_traj(seg_df, direction):
 
     # condition for upward trend
     up = (f_slow < f_fast) & (b_slow > b_fast)
-
     traj_id_ts = (up.astype(int)  # 1 for up, 0 otherwise
                   .diff()  # to up transitions marked with 1.0, from up with -1.0
                   .clip(0)  # rectify out from up transitions
@@ -205,6 +204,10 @@ def prune_boundary(df, xmax, xmin):
     For forward traverses, the boundary position is xmax; for backward
     ones xmin.
     """
+
+    # add column to indicate whether fish has reached goal for current trial
+    df['reached_goal'] = False
+
     margin = 10  # distance within the arena from the boundary before checking progress
     slist = []
     for (id, h, ss), sess_df in df.groupby(['id', 'height', 'stimulus_speed']):
@@ -216,6 +219,7 @@ def prune_boundary(df, xmax, xmin):
                                        (sess_df.xpos > xmax)].time.min()
         # sess_df.loc[(sess_df.direction == 'F') & (sess_df.time >= forward_time_reached), ['seg_id', 'traj_id']] = -1
         sess_df.loc[(sess_df.direction == 'F') & (sess_df.time >= forward_time_reached), ['prune']] = True
+        sess_df.loc[(sess_df.direction == 'F') & (sess_df.time >= forward_time_reached), ['reached_goal']] = True
 
         margin_time = sess_df[(sess_df.direction == 'B') & (sess_df.xpos > xmin + margin)].time.min()
         backward_time_reached = sess_df[(sess_df.direction == 'B')
@@ -223,6 +227,19 @@ def prune_boundary(df, xmax, xmin):
                                         & (sess_df.xpos < xmin)].time.min()
         # sess_df.loc[(sess_df.direction == 'B') & (sess_df.time >= backward_time_reached), ['seg_id', 'traj_id']] = -1
         sess_df.loc[(sess_df.direction == 'B') & (sess_df.time >= backward_time_reached), ['prune']] = True
+        sess_df.loc[(sess_df.direction == 'B') & (sess_df.time >= backward_time_reached), ['reached_goal']] = True
         slist.append(sess_df)
     dfp = pd.concat(slist)
     return dfp
+
+if __name__ == '__main__':
+    def test():
+        from expts.utils.persist import load_data
+        resample_fname = 'resample.feather'
+        fname = "../data/expt/bf/bouts_ts.feather"
+
+        resample_path = os.path.join(datadir, resample_fname)
+
+        resample_df = load_data(resample_path)
+
+        extract_df = extract(resample_df, f_trial_duration=trial_duration)
